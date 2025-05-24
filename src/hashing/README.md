@@ -1,4 +1,5 @@
 Recent Structural Improvements:
+
 Class MyHashTable<K, V>
 •	Now uses two generic types: K for keys and V for values.
 •	insert(K key, V value) and find(K key) methods have been implemented (require review and testing).
@@ -12,3 +13,5 @@ Class HashCell → renamed to HashEntry
 
 TO-DO
 •	Implement the first functional prototype of the MyHashTable (Minimum Viable Product) to test insertions, lookups, and basic collision handling.
+
+You can find my progress report in my Notion page: https://www.notion.so/hashing-1fbf25dbe27f80528fa4c006bb198201

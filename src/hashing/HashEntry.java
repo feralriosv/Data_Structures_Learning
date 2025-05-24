@@ -1,31 +1,33 @@
 package hashing;
 
-public class HashEntry<K, V> {
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
     private K key;
     private V value;
     private int hashCode;
     private HashEntry<K, V> next;
 
-    public HashEntry(int hashCode, K key, V value) {
+    public HashEntry(int hashCode, K key, V value, HashEntry<K, V> next) {
         this.hashCode = hashCode;
         this.key = key;
         this.value = value;
+        this.next = next;
     }
 
-    public void setKey(K key) {
+    public void newEntry(int hash, K key, V value) {
+        this.hashCode = hash;
         this.key = key;
+        this.value = value;
+        if (next == null) {
+
+        }
     }
 
     public void setValue(V value) {
         this.value = value;
-    }
-
-    public void setHashCode(int hashCode) {
-        this.hashCode = hashCode;
-    }
-
-    public void setNext(HashEntry<K, V> next) {
-        this.next = next;
     }
 
     public K getKey() {
@@ -36,11 +38,22 @@ public class HashEntry<K, V> {
         return value;
     }
 
-    public int getHashCode() {
-        return hashCode;
-    }
+    @Override
+    public Iterator<HashEntry<K, V>> iterator() {
+        return new Iterator<>() {
+            private HashEntry<K, V> current = HashEntry.this;
 
-    public HashEntry<K, V> getNext() {
-        return next;
+            @Override
+            public boolean hasNext() {
+                return current.next != null;
+            }
+
+            @Override
+            public HashEntry<K, V> next() {
+                HashEntry<K, V> helper = current;
+                current = current.next;
+                return helper;
+            }
+        };
     }
 }

@@ -1,8 +1,6 @@
 package hashing;
 
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
     private K key;
@@ -17,15 +15,6 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
         this.next = next;
     }
 
-    public void newEntry(int hash, K key, V value) {
-        this.hashCode = hash;
-        this.key = key;
-        this.value = value;
-        if (next == null) {
-
-        }
-    }
-
     public void setValue(V value) {
         this.value = value;
     }
@@ -38,6 +27,10 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
         return value;
     }
 
+    public HashEntry<K, V> getNext() {
+        return next;
+    }
+
     @Override
     public Iterator<HashEntry<K, V>> iterator() {
         return new Iterator<>() {
@@ -45,7 +38,7 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
 
             @Override
             public boolean hasNext() {
-                return current.next != null;
+                return current != null;
             }
 
             @Override

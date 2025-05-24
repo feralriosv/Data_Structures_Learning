@@ -19,15 +19,36 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
 
     @Override
     public void insert(K key, V value) {
-        entries[hash(key)] = new HashEntry<>(hash(key), key, value);
+        int hashCode = hash(key);
+//        Empty chain
+        if (entries[hashCode] == null) {
+            entries[hashCode] = new HashEntry<>(hashCode, key, value, null);
+            return;
+        }
+//        Checks if key already exists => O(n)
+        for (HashEntry<K, V> entry : entries[hashCode]) {
+            if (entry.getKey().equals(key)) {
+                entry.setValue(value);
+                return;
+            }
+        }
+//        Adds the new node at the beginning of the chain => O(1)
+        entries[hashCode] = new HashEntry<>(hashCode, key, value, entries[hashCode]);
     }
 
-//    TODO: Check if works good
     @Override
     public V find(K key) {
-        return entries[hash(key)].getValue();
+        int hashCode = hash(key);
+//        Looks up the key along the chain
+        for (HashEntry<K, V> entry : entries[hashCode]) {
+            if (entry.getKey().equals(key)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
+//    TO-DO: Implement Method
     @Override
     public V remove(K key) {
         return null;

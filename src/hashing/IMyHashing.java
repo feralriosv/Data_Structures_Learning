@@ -1,8 +1,7 @@
 package hashing;
 
-public interface IMyHashing<T>{
-
-    void insert(T t);
-    T remove(int elementKey);
-    T find(int elementKey);
+public interface IMyHashing<K, V>{
+    void insert(K key, V value);
+    V remove(K elementKey);
+    V find(K elementKey);
 }

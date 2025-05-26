@@ -8,7 +8,7 @@ public class HashFunction<K, V> {
         this.table = table;
     }
 
-    public int apply(K key) {
+    protected int apply(K key) {
         int hashCode = Math.abs(key.hashCode());
         if (hashCode == Integer.MIN_VALUE) return 0;
 

@@ -15,28 +15,28 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
         this.next = next;
     }
 
-    public void setValue(V value) {
+    protected void setValue(V value) {
         this.value = value;
     }
 
-    public K getKey() {
+    protected K getKey() {
         return key;
     }
 
-    public V getValue() {
+    protected V getValue() {
         return value;
     }
 
-    public HashEntry<K, V> getNext() {
+    protected HashEntry<K, V> getNext() {
         return next;
     }
 
-    public void setNext(HashEntry<K, V> next) {
+    protected void setNext(HashEntry<K, V> next) {
         this.next = next;
     }
 
     //    Simplifies conditionals
-    public boolean matches(int inputHash, K inputKey) {
+    protected boolean matches(int inputHash, K inputKey) {
         return this.hash == inputHash && this.key.equals(inputKey);
     }
 

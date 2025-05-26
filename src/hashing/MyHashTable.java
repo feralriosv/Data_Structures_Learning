@@ -86,7 +86,7 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
         return count;
     }
 
-    public int getCapacity() {
+    protected int getCapacity() {
         return capacity;
     }
 }

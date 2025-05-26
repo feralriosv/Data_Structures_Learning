@@ -9,7 +9,10 @@ Class MyHashTable<K, V>
 Class HashEntry
 
     - Setter and getter for next attribute was implemented
-    
+
+Class HashFunction
+
+    - New Implementation, which separates the function logic from the Data Structure as itself
 
 TO-DO
 •	Implement the first functional prototype of the MyHashTable (Minimum Viable Product) to test insertions, lookups, and basic collision handling.

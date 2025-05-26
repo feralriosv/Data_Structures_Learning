@@ -2,14 +2,18 @@ Recent Structural Improvements:
 
 Class MyHashTable<K, V>
 
-    - Enhance insert(K key, V value) and find(K key) methods functionality
+    - Null checks added to insert as well as to find method
+
+    - Remove method implemented
 
 Class HashEntry
 
-    - Implement Interable interface to the class to enable easy trasversal across the entries
+    - Setter and getter for next attribute was implemented
     
 
 TO-DO
 •	Implement the first functional prototype of the MyHashTable (Minimum Viable Product) to test insertions, lookups, and basic collision handling.
+•	Do some final adjusts and explore the capacity and loadfactor attributes in MyHashTable class in order to be implemented in the code.
+
 
 You can find my progress report in my Notion page: https://www.notion.so/hashing-1fbf25dbe27f80528fa4c006bb198201

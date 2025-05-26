@@ -6,7 +6,7 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
     private final K key;
     private V value;
     private final int hash;
-    private final HashEntry<K, V> next;
+    private HashEntry<K, V> next;
 
     public HashEntry(int hash, K key, V value, HashEntry<K, V> next) {
         this.hash = hash;
@@ -27,6 +27,15 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
         return value;
     }
 
+    public HashEntry<K, V> getNext() {
+        return next;
+    }
+
+    public void setNext(HashEntry<K, V> next) {
+        this.next = next;
+    }
+
+    //    Simplifies conditionals
     public boolean matches(int inputHash, K inputKey) {
         return this.hash == inputHash && this.key.equals(inputKey);
     }

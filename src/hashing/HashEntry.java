@@ -5,11 +5,11 @@ import java.util.Iterator;
 public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
     private final K key;
     private V value;
-    private final int hashCode;
+    private final int hash;
     private final HashEntry<K, V> next;
 
-    public HashEntry(int hashCode, K key, V value, HashEntry<K, V> next) {
-        this.hashCode = hashCode;
+    public HashEntry(int hash, K key, V value, HashEntry<K, V> next) {
+        this.hash = hash;
         this.key = key;
         this.value = value;
         this.next = next;
@@ -27,8 +27,8 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
         return value;
     }
 
-    public int getHashCode() {
-        return hashCode;
+    public boolean matches(int inputHash, K inputKey) {
+        return this.hash == inputHash && this.key.equals(inputKey);
     }
 
     @Override

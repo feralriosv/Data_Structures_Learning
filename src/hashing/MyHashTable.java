@@ -4,11 +4,13 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
     public static final int MAXIMUM_CAPACITY = 15;
 
     private final HashEntry<K, V>[] entries;
-    private int capacity;
+    private final HashFunction<K, V> hash;
+    private final int capacity;
     private int count;
 //    private int loadFactor;
 
     public MyHashTable(int initialCapacity) {
+        this.hash = new HashFunction<>(this);
         if (initialCapacity < 0) {
             throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
         }
@@ -24,7 +26,7 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
     @Override
     public void insert(K key, V value) {
         if (key == null) return;
-        int hashCode = hash(key);
+        int hashCode = hash.apply(key);
 //        Empty chain
         if (entries[hashCode] == null) {
             entries[hashCode] = new HashEntry<>(hashCode, key, value, null);
@@ -46,7 +48,7 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
     @Override
     public V find(K key) {
         if (key == null) return null;
-        int hashCode = hash(key);
+        int hashCode = hash.apply(key);
         if (entries[hashCode] == null) return null;
 //        Looks up the key along the chain
         for (HashEntry<K, V> entry : entries[hashCode]) {
@@ -60,7 +62,7 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
     @Override
     public boolean remove(K key) {
         if (key == null) return false;
-        int hashCode = hash(key);
+        int hashCode = hash.apply(key);
 
         HashEntry<K, V> head = entries[hashCode];
         if (head == null) return false;
@@ -82,22 +84,6 @@ public class MyHashTable<K, V> implements IMyHashing<K, V> {
 
     public int size() {
         return count;
-    }
-
-    public int hash(K key) {
-        int hashCode = Math.abs(key.hashCode());
-        if (hashCode == Integer.MIN_VALUE) return 0;
-
-        String hashString = Integer.toString(hashCode);
-        if (hashString.length() == 1) return hashCode % capacity;
-
-        return fold(hashString);
-    }
-
-    private int fold(String value) {
-        String first = value.substring(0, value.length() / 2);
-        String second = value.substring(value.length() / 2);
-        return  (Integer.parseInt(first) + Integer.parseInt(second)) % capacity;
     }
 
     public int getCapacity() {

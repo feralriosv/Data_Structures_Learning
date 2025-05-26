@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
     private final K key;
     private V value;
-    private int hashCode;
+    private final int hashCode;
     private final HashEntry<K, V> next;
 
     public HashEntry(int hashCode, K key, V value, HashEntry<K, V> next) {
@@ -25,6 +25,10 @@ public class HashEntry<K, V> implements Iterable<HashEntry<K, V>> {
 
     public V getValue() {
         return value;
+    }
+
+    public int getHashCode() {
+        return hashCode;
     }
 
     @Override

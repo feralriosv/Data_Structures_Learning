@@ -13,14 +13,17 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
         size = 0;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     @Override
     public boolean enqueue(E e) {
-        if (capacity == size) {
-            return false;
-        }
+        if (capacity == size) return false;
 
         int index = size - 1;
 
+//        Iterates over elements and shifts the greater ones to the right
         while (index >= 0 && e.compareTo(data[index]) < 0) {
             data[index + 1] = data[index];
             index--;
@@ -32,10 +35,27 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
         return false;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
+    @Override
+    public E dequeue() {
+        if (isEmpty()) return null;
+
+        E value = data[0];
+
+        for (int i = 0; i < size - 1; i++) {
+            data[i] = data[i + 1];
+        }
+
+        data[size - 1] = null;
+        size--;
+        return value;
     }
 
+    @Override
+    public void remove() {
+
+    }
+
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         if (isEmpty()) {
@@ -50,15 +70,5 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
         }
         s.append("]");
         return s.toString();
-    }
-
-    @Override
-    public boolean dequeue() {
-        return false;
-    }
-
-    @Override
-    public void remove() {
-
     }
 }

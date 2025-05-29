@@ -2,9 +2,9 @@ package linear.fifo;
 
 public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
 
-    private final E[] data;
+    private E[] data;
     private int count;
-    private final int capacity;
+    private int capacity;
 
     public MyPriorityQueue(int capacity) {
         this.capacity = capacity;
@@ -21,6 +21,24 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
         return count;
     }
 
+    public void clear() {
+        for (int i = 0; i < count; i++) {
+            data[i] = null;
+        }
+        count = 0;
+    }
+
+//    Compares if two Queues are exactly the same
+    public boolean equals(MyPriorityQueue<E> other) {
+        if (count != other.count) return false;
+        for (int i = 0; i < count; i++) {
+            if (!this.data[i].equals(other.data[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean contains(E e) {
         int left = 0;
         int right = count - 1;
@@ -32,11 +50,10 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
             if (comparison == 0) return true;
             if (comparison < 0) right = mid - 1;
             else left = mid + 1;
-        } //O(log(n))
+        } // O(log(n))
 
         return false;
     }
-
 
     @Override
     public E peek() {
@@ -46,7 +63,7 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
 
     @Override
     public boolean enqueue(E e) {
-        if (capacity == count) return false;
+        if (capacity == count) resize();
 
         int index = count - 1;
 
@@ -103,5 +120,13 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
         }
         s.append("]");
         return s.toString();
+    }
+
+    private void resize() {
+        //noinspection unchecked
+        E[] resized = (E[]) new Comparable[this.capacity * 2];
+        System.arraycopy(this.data, 0, resized, 0, data.length);
+        data = resized;
+        capacity = capacity * 2;
     }
 }

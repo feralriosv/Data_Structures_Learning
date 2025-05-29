@@ -1,13 +1,13 @@
 package hashing;
 
 public class MyHashTable<K, V> implements IMyHashing<K, V> {
-    public static final int MAXIMUM_CAPACITY = 15;
+    private static final int MAXIMUM_CAPACITY = 20;
+    private static final float LOAD_FACTOR = 0.75f;
 
     private final HashEntry<K, V>[] entries;
     private final HashFunction<K, V> hash;
     private final int capacity;
     private int count;
-//    private int loadFactor;
 
     public MyHashTable(int initialCapacity) {
         this.hash = new HashFunction<>(this);

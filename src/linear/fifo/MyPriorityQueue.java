@@ -22,9 +22,18 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
     }
 
     public boolean contains(E e) {
-        for (E element : data) { //O(n)
-            if (e.equals(element)) return true;
-        }
+        int left = 0;
+        int right = count - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            int comparison = e.compareTo(data[mid]);
+
+            if (comparison == 0) return true;
+            if (comparison < 0) right = mid - 1;
+            else left = mid + 1;
+        } //O(log(n))
+
         return false;
     }
 

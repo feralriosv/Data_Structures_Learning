@@ -3,25 +3,43 @@ package linear.fifo;
 public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
 
     private final E[] data;
-    private int size;
+    private int count;
     private final int capacity;
 
     public MyPriorityQueue(int capacity) {
         this.capacity = capacity;
         //noinspection unchecked
         data = (E[]) new Comparable[capacity];
-        size = 0;
+        count = 0;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return count == 0;
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public boolean contains(E e) {
+        for (E element : data) { //O(n)
+            if (e.equals(element)) return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public E peek() {
+        if (isEmpty()) return null;
+        return data[0];
     }
 
     @Override
     public boolean enqueue(E e) {
-        if (capacity == size) return false;
+        if (capacity == count) return false;
 
-        int index = size - 1;
+        int index = count - 1;
 
 //        Iterates over elements and shifts the greater ones to the right
         while (index >= 0 && e.compareTo(data[index]) < 0) {
@@ -31,7 +49,7 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
 
 //        Re-establishes the index
         data[index + 1] = e;
-        size++;
+        count++;
         return false;
     }
 
@@ -39,20 +57,26 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
     public E dequeue() {
         if (isEmpty()) return null;
 
+//        Catches return value
         E value = data[0];
 
-        for (int i = 0; i < size - 1; i++) {
+//        Shifts each value to the left
+        for (int i = 0; i < count - 1; i++) {
             data[i] = data[i + 1];
         }
 
-        data[size - 1] = null;
-        size--;
+//        Removes last duplicate
+        data[count - 1] = null;
+        count--;
         return value;
     }
 
     @Override
     public void remove() {
-
+        if (isEmpty()) {
+            throw new IllegalArgumentException("Empty Queue");
+        }
+        dequeue();
     }
 
     @Override
@@ -62,9 +86,9 @@ public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
             return "[]";
         }
         s.append("[");
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < count; i++) {
             s.append(data[i]);
-            if (i < size - 1) {
+            if (i < count - 1) {
                 s.append(", ");
             }
         }

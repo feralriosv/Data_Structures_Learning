@@ -23,12 +23,16 @@ public class Node {
     protected boolean removeLast() {
         values[dataCount] = 0;
         dataCount--;
-        if (dataCount == 0) {
+        if (dataCount == 0 && prev != null) {
             prev.next = null;
             this.prev = null;
             return true;
         }
         return false;
+    }
+
+    public boolean hasPrev() {
+        return prev != null;
     }
 
     public boolean isFull() {

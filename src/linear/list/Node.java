@@ -1,44 +1,58 @@
 package linear.list;
 
 public class Node {
-    private int[] values;
-    private int capacity;
+    private final int[] values;
+    private final int capacity;
     private Node next;
     private Node prev;
-    private int count;
+    private int dataCount;
 
     public Node(int capacity) {
         this.capacity = capacity;
         values = new int[capacity];
         next = null;
         prev = null;
-        count = 0;
+        dataCount = 0;
     }
 
-    protected boolean addLast(int element) {
-        if (isFull()) {
-            Node newNext = new Node(capacity);
-            this.next = newNext;
-            newNext.prev = this;
-            newNext.values[0] = element;
-            newNext.count++;
-            return true;
-        } else {
-            values[count] = element;
-            count++;
-            return false;
-        }
+    protected void addLast(int element) {
+        values[dataCount] = element;
+        dataCount++;
     }
 
-    public boolean hasNext() {
-        return next != null;
+    protected void removeLast() {
+        values[dataCount] = 0;
+        dataCount--;
     }
 
-    public Node next() {
-        return next;
+    public void clear() {
+        prev.next = null;
+        this.prev = null;
+        values[dataCount] = 0;
+        dataCount = 0;
     }
 
-    private boolean isFull() {
-        return count == capacity;
+    public boolean isFull() {
+        return dataCount == capacity;
+    }
+
+    public boolean emptyAfterRemove() {
+        return dataCount == 1;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
+    }
+
+    public Node getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Node prev) {
+        this.prev = prev;
     }
 }

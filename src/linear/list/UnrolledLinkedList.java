@@ -2,17 +2,20 @@ package linear.list;
 
 public class UnrolledLinkedList {
     private Node tail;
+    private final int arraySize;
     private int totalCount;
 
     public UnrolledLinkedList(int arraySize) {
+        this.arraySize = arraySize;
         this.tail = new Node(arraySize);
         totalCount = 0;
     }
 
     public boolean push(int element) {
         totalCount++;
+        System.out.println(totalCount);
         if (tail.isFull()) {
-            Node newTail = new Node(tail.getCapacity());
+            Node newTail = new Node(arraySize);
             tail.setNext(newTail);
             newTail.setPrev(tail);
             tail = newTail;
@@ -27,26 +30,29 @@ public class UnrolledLinkedList {
     public boolean pop() {
         if (isEmpty()) return false;
         totalCount--;
-        if (tail.emptyAfterRemove()) {
-            Node newTail = tail.getPrev();
-            tail.clear();
+        Node newTail = tail.getPrev();
+        if (tail.removeLast()) {
             tail = newTail;
             return true;
-        } else {
-            tail.removeLast();
-            return false;
         }
+        return false;
     }
 
     public int amountArrays() {
-        return 1;
+        int counter = 1;
+        Node copy = tail;
+        while (copy.hasPrev()) {
+            counter++;
+            copy = copy.getPrev();
+        }
+        return counter;
     }
 
     public int size() {
         return totalCount;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return totalCount == 0;
     }
 }

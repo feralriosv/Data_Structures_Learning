@@ -1,7 +1,7 @@
 package linear.list;
 
 public class Node {
-    private final int[] values;
+    private int[] values;
     private final int capacity;
     private Node next;
     private Node prev;
@@ -20,28 +20,19 @@ public class Node {
         dataCount++;
     }
 
-    protected void removeLast() {
+    protected boolean removeLast() {
         values[dataCount] = 0;
         dataCount--;
-    }
-
-    public void clear() {
-        prev.next = null;
-        this.prev = null;
-        values[dataCount] = 0;
-        dataCount = 0;
+        if (dataCount == 0) {
+            prev.next = null;
+            this.prev = null;
+            return true;
+        }
+        return false;
     }
 
     public boolean isFull() {
         return dataCount == capacity;
-    }
-
-    public boolean emptyAfterRemove() {
-        return dataCount == 1;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     public void setNext(Node next) {

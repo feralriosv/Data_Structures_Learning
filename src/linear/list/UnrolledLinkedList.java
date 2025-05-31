@@ -11,14 +11,42 @@ public class UnrolledLinkedList {
 
     public boolean push(int element) {
         totalCount++;
-        return tail.addLast(element);
+        if (tail.isFull()) {
+            Node newTail = new Node(tail.getCapacity());
+            tail.setNext(newTail);
+            newTail.setPrev(tail);
+            tail = newTail;
+            newTail.addLast(element);
+            return true;
+        } else {
+            tail.addLast(element);
+            return false;
+        }
     }
 
     public boolean pop() {
+        if (isEmpty()) return false;
+        totalCount--;
+        if (tail.emptyAfterRemove()) {
+            Node newTail = tail.getPrev();
+            tail.clear();
+            tail = newTail;
+            return true;
+        } else {
+            tail.removeLast();
+            return false;
+        }
+    }
 
+    public int amountArrays() {
+        return 1;
     }
 
     public int size() {
         return totalCount;
+    }
+
+    private boolean isEmpty() {
+        return totalCount == 0;
     }
 }

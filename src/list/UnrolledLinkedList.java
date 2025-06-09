@@ -1,4 +1,4 @@
-package linear.list;
+package list;
 
 /**
  * Represents a node in the unrolled linked list.

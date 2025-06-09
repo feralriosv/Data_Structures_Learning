@@ -1,4 +1,4 @@
-package linear.fifo;
+package fifo;
 
 public interface IMyQueue<E> {
     boolean enqueue(E e);

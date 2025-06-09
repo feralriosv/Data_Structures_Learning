@@ -1,4 +1,4 @@
-package linear.fifo;
+package fifo;
 
 public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
 

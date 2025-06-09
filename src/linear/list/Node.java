@@ -105,6 +105,12 @@ public class Node {
         return values[index];
     }
 
+    /**
+     * Returns a string representation of the node's elements separated by the specified delimiter.
+     *
+     * @param separator the string to separate each element
+     * @return a string representation of the node's elements
+     */
     protected String toString(String separator) {
         StringBuilder nodeContent = new StringBuilder();
         int lastElementIndex = totalElements - 1;

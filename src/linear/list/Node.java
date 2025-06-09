@@ -21,29 +21,51 @@ public class Node {
     }
 
     protected boolean removeLast() {
-        values[totalElements] = 0;
+        values[totalElements - 1] = 0;
         totalElements--;
         // Indicates if node is empty after element removal.
         return totalElements == 0;
     }
 
-    public boolean hasPrev() {
-        return prev != null;
-    }
-
-    public boolean isFull() {
+    protected boolean isFull() {
         return totalElements == capacity;
     }
 
-    public void setNext(Node next) {
+    protected boolean hasNext() {
+        return next != null;
+    }
+
+    protected void setNext(Node next) {
         this.next = next;
     }
 
-    public Node getPrev() {
+    protected Node getPrev() {
         return prev;
     }
 
-    public void setPrev(Node prev) {
+    protected void setPrev(Node prev) {
         this.prev = prev;
+    }
+
+    protected Node getNext() {
+        return next;
+    }
+
+    protected int size() {
+        return totalElements;
+    }
+
+    protected int valueAt(int index) {
+        return values[index];
+    }
+
+    protected String toString(String separator) {
+        StringBuilder nodeContent = new StringBuilder();
+        int lastElementIndex = totalElements - 1;
+        for (int i = 0; i < lastElementIndex; i++) {
+            nodeContent.append(values[i]).append(separator);
+        }
+        nodeContent.append(values[lastElementIndex]);
+        return nodeContent.toString();
     }
 }

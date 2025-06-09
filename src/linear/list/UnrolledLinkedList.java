@@ -8,7 +8,8 @@ public class UnrolledLinkedList {
     private int totalElements;
 
     public UnrolledLinkedList(int arraySize) {
-        this.arraySize = arraySize;;
+        this.arraySize = arraySize;
+        totalArrays = 0;
         totalElements = 0;
         head = null;
         tail = null;

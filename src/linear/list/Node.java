@@ -1,5 +1,10 @@
 package linear.list;
 
+/**
+ * Represents a node in the unrolled linked list.
+ *
+ * @author Fernando Rios
+ */
 public class Node {
     private final int[] values;
     private final int capacity;
@@ -7,6 +12,11 @@ public class Node {
     private Node prev;
     private int totalElements;
 
+    /**
+     * Constructs a new node with the specified capacity for its internal array.
+     *
+     * @param capacity the maximum number of elements this node can hold
+     */
     public Node(int capacity) {
         this.capacity = capacity;
         values = new int[capacity];

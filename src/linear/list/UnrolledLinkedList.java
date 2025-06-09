@@ -1,5 +1,10 @@
 package linear.list;
 
+/**
+ * Represents a node in the unrolled linked list.
+ *
+ * @author Fernando Rios
+ */
 public class UnrolledLinkedList {
     private Node head;
     private Node tail;
@@ -7,6 +12,11 @@ public class UnrolledLinkedList {
     private int totalArrays;
     private int totalElements;
 
+    /**
+     * Constructs a new UnrolledLinkedList with the specified array capacity per node.
+     *
+     * @param arraySize the maximum number of elements each node's internal array can hold
+     */
     public UnrolledLinkedList(int arraySize) {
         this.arraySize = arraySize;
         totalArrays = 0;

@@ -5,30 +5,26 @@ public class Node {
     private final int capacity;
     private Node next;
     private Node prev;
-    private int dataCount;
+    private int totalElements;
 
     public Node(int capacity) {
         this.capacity = capacity;
         values = new int[capacity];
         next = null;
         prev = null;
-        dataCount = 0;
+        totalElements = 0;
     }
 
     protected void addLast(int element) {
-        values[dataCount] = element;
-        dataCount++;
+        values[totalElements] = element;
+        totalElements++;
     }
 
     protected boolean removeLast() {
-        values[dataCount] = 0;
-        dataCount--;
-        if (dataCount == 0 && prev != null) {
-            prev.next = null;
-            this.prev = null;
-            return true;
-        }
-        return false;
+        values[totalElements] = 0;
+        totalElements--;
+        // Indicates if node is empty after element removal.
+        return totalElements == 0;
     }
 
     public boolean hasPrev() {
@@ -36,7 +32,7 @@ public class Node {
     }
 
     public boolean isFull() {
-        return dataCount == capacity;
+        return totalElements == capacity;
     }
 
     public void setNext(Node next) {

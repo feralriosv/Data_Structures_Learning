@@ -1,7 +1,7 @@
 package linear.list;
 
 public class Node {
-    private int[] values;
+    private final int[] values;
     private final int capacity;
     private Node next;
     private Node prev;

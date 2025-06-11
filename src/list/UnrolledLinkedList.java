@@ -129,7 +129,7 @@ public class UnrolledLinkedList {
             listContent.append(separator);
             current = current.getNext();
         }
-        listContent.append(current.toString(separator)); // Appends tail without unnecessary ";"
+        listContent.append(current.toString(separator)); // Appends tail without unnecessary separator
         return listContent.toString();
     }
 

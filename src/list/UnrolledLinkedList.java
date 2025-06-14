@@ -67,13 +67,8 @@ public class UnrolledLinkedList {
      * @return The size of the specified array.
      */
     public int sizeArray(int index) {
-        int currentIndex = 0;
-        Node current = head;
-        while (currentIndex < index) {
-            current = current.getNext();
-            currentIndex++;
-        }
-        return current.size();
+        Node array = getArrayAt(index);
+        return array.size();
     }
 
     /**
@@ -83,15 +78,11 @@ public class UnrolledLinkedList {
      * @return the element at the specified index.
      */
     public int get(int index) {
-        int targetArray = index / totalArrays;
+        int arrayIndex = index / totalArrays;
         int elementIndex = index % totalArrays;
-        int currentPos = 0;
-        Node current = head;
-        while (currentPos < targetArray) {
-            current = current.getNext();
-            currentPos++;
-        }
-        return current.valueAt(elementIndex);
+
+        Node targetArray = getArrayAt(arrayIndex);
+        return targetArray.valueAt(elementIndex);
     }
 
     /**
@@ -165,5 +156,15 @@ public class UnrolledLinkedList {
             tail.setNext(null);
         }
         totalArrays--;
+    }
+
+    private Node getArrayAt(int targetIndex) {
+        int currentIndex = 0;
+        Node current = head;
+        while (currentIndex < targetIndex) {
+            current = current.getNext();
+            currentIndex++;
+        }
+        return current;
     }
 }

@@ -123,11 +123,10 @@ public class Node {
      */
     protected String toString(String separator) {
         StringBuilder nodeContent = new StringBuilder();
-        int lastElementIndex = totalElements - 1;
-        for (int i = 0; i < lastElementIndex; i++) {
+        for (int i = 0; i < totalElements - 1; i++) {
             nodeContent.append(values[i]).append(separator);
         }
-        nodeContent.append(values[lastElementIndex]);
+        nodeContent.append(values[totalElements - 1]);
         return nodeContent.toString();
     }
 }

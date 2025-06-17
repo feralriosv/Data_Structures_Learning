@@ -1,4 +1,4 @@
-package fifo;
+package queue;
 
 public class MyPriorityQueue<E extends Comparable<E>> implements IMyQueue<E> {
 

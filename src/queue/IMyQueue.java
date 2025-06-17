@@ -1,4 +1,4 @@
-package fifo;
+package queue;
 
 public interface IMyQueue<E> {
     boolean enqueue(E e);

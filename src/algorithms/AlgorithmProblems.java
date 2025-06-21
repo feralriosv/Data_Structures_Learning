@@ -4,7 +4,7 @@ import java.util.*;
 
 public class AlgorithmProblems {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 4, 5, 5, 5, 4, 54, 23, 42, 43};
+        int[] arr = {1, 2, 4, 5, 5, 5, 5, 4, 54, 23, 42, 43};
 
         hasRepeatedMoreThanKTimes(arr, 3);
     }
@@ -18,16 +18,22 @@ public class AlgorithmProblems {
      * @return true if any integer appears more than k times, false otherwise
      */
 
-    public static boolean hasRepeatedMoreThanKTimes(int[] array, int k) {
+    public static void hasRepeatedMoreThanKTimes(int[] array, int k) {
         Map<Integer, Integer> frequencies = new HashMap<>();
+        int maxFreq = 0;
 
-        for (int i = 0; i < array.length; i++) {
-            int frequency = frequencies.getOrDefault(array[i], 0);
-            frequencies.put(array[i], frequency + 1);
+        for (int value : array) {
+
+            int frequency = frequencies.getOrDefault(value, 0) + 1;
+
+            if (frequency > k) {
+                System.out.println("FOUND: " + value);
+                return;
+            }
+
+            frequencies.put(value, frequency);
         }
-        System.out.println(frequencies);
 
-        return false;
+        System.out.println("NO MATCH");
     }
-
 }

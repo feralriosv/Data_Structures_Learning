@@ -5,8 +5,11 @@ import java.util.*;
 public class AlgorithmProblems {
     public static void main(String[] args) {
         int[] arr = {1, 2, 4, 5, 5, 5, 5, 4, 54, 23, 42, 43};
-
-        hasRepeatedMoreThanKTimes(arr, 3);
+        int[] arr1 = {};
+        int[] arr3 = {-1, -1, -1, 0};
+        hasFrequentElementOverK(arr, 3);
+        hasFrequentElementOverK(arr1, 0);
+        hasFrequentElementOverK(arr3, 2);
     }
 
     /**
@@ -15,25 +18,34 @@ public class AlgorithmProblems {
      *
      * @param array the array of integers to be checked
      * @param k the repetition threshold
-     * @return true if any integer appears more than k times, false otherwise
      */
 
-    public static void hasRepeatedMoreThanKTimes(int[] array, int k) {
-        Map<Integer, Integer> frequencies = new HashMap<>();
-        int maxFreq = 0;
+    public static void hasFrequentElementOverK(int[] array, int k) {
 
-        for (int value : array) {
-
-            int frequency = frequencies.getOrDefault(value, 0) + 1;
-
-            if (frequency > k) {
-                System.out.println("FOUND: " + value);
-                return;
-            }
-
-            frequencies.put(value, frequency);
+        if (array.length < 1) {
+            System.err.println("There must be at least one element in the array");
+            return;
         }
 
-        System.out.println("NO MATCH");
+        Map<Integer, Integer> frequencies = new HashMap<>();
+        int maxFreq = 0;
+        int value = 0;
+
+        for (int currentValue : array) {
+            int valueFrequency = frequencies.getOrDefault(currentValue, 0) + 1;
+            frequencies.put(currentValue, valueFrequency);
+
+            if (valueFrequency > k) {
+                maxFreq = valueFrequency;
+                value = currentValue;
+            }
+        }
+
+        if (maxFreq > k) {
+            System.out.println("Match with maximal frequency " + maxFreq + " at value " + value);
+        } else {
+            System.out.println("No match");
+        }
+
     }
 }

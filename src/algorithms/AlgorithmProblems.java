@@ -131,45 +131,45 @@ public class AlgorithmProblems {
         System.out.println(totalInversions);
     }
 
-    private static int mergeAndCount(int[] array, int low, int mid, int high) {
-        int lowPartLength = mid - low + 1;
-        int highPartLength = high - mid;
+    private static int mergeAndCount(int[] array, int left, int mid, int right) {
+        int leftPartLength = mid - left + 1;
+        int rightPartLength = right - mid;
 
-        int[] lowPart = Arrays.copyOfRange(array, low, mid + 1);
-        int[] highPart = Arrays.copyOfRange(array, mid + 1, high + 1);
+        int[] leftPart = Arrays.copyOfRange(array, left, mid + 1);
+        int[] rightPart = Arrays.copyOfRange(array, mid + 1, right + 1);
 
-        int indexLow = 0, indexHigh = 0, inversionCounter = 0;
-        int mergeIndex = low;
+        int indexLeft = 0, indexRight = 0, inversionCounter = 0;
+        int mergeIndex = left;
 
-        while (indexLow < lowPartLength && indexHigh < highPartLength) {
+        while (indexLeft < leftPartLength && indexRight < rightPartLength) {
 
-            if (lowPart[indexLow] <= highPart[indexHigh]) {
-                array[mergeIndex] = lowPart[indexLow];
-                indexLow++;
+            if (leftPart[indexLeft] <= rightPart[indexRight]) {
+                array[mergeIndex] = leftPart[indexLeft];
+                indexLeft++;
             } else {
-                array[mergeIndex] = highPart[indexHigh];
-                indexHigh++;
-                inversionCounter += lowPartLength - indexLow;
+                array[mergeIndex] = rightPart[indexRight];
+                indexRight++;
+                inversionCounter += leftPartLength - indexLeft;
             }
 
             mergeIndex++;
         }
 
-        copyIfRest(lowPart, array, indexLow, mergeIndex);
-        copyIfRest(highPart, array, indexHigh, mergeIndex);
+        copyIfRest(leftPart, array, indexLeft, mergeIndex);
+        copyIfRest(rightPart, array, indexRight, mergeIndex);
 
         return inversionCounter;
     }
 
-    private static int sortAndCountInversions(int[] array, int low, int high) {
+    private static int sortAndCountInversions(int[] array, int left, int right) {
         int partialInversions = 0;
 
-        if (low < high) {
-            int mid = (low + high) / 2;
+        if (left < right) {
+            int mid = (left + right) / 2;
 
-            partialInversions += sortAndCountInversions(array, low, mid);
-            partialInversions += sortAndCountInversions(array, mid + 1, high);
-            partialInversions += mergeAndCount(array, low, mid, high);
+            partialInversions += sortAndCountInversions(array, left, mid);
+            partialInversions += sortAndCountInversions(array, mid + 1, right);
+            partialInversions += mergeAndCount(array, left, mid, right);
         }
 
         return partialInversions;

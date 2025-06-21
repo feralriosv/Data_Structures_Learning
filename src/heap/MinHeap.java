@@ -5,20 +5,20 @@ import java.util.Arrays;
 public class MinHeap {
     private final int[] heap;
     private final int capacity;
-    private int elements;
+    private int totalElements;
 
     public MinHeap(int capacity) {
-        this.heap = new int[capacity];
-        this.capacity = capacity;
-        this.elements = 0;
+        this.capacity = Math.max(1, capacity);
+        this.heap = new int[this.capacity];
+        this.totalElements = 0;
     }
 
     public void insert(int element) {
-        if (!full()) {
-            int index = elements;
+        if (totalElements < capacity) {
+            int index = totalElements;
             heap[index] = element;
             siftUp(index);
-            elements++;
+            totalElements++;
         }
     }
 
@@ -26,6 +26,31 @@ public class MinHeap {
         return (capacity > 0)
                 ? heap[0]
                 : -1;
+    }
+
+    public int extractMin() {
+        int result = heap[0];
+        heap[0] = heap[totalElements - 1];
+        totalElements--;
+        siftDown(0);
+        return result;
+    }
+
+    private void siftDown(int index) {
+        int minSonIndex;
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+
+        if (heap[left] <= heap[right]) {
+            minSonIndex = left;
+        } else {
+            minSonIndex = right;
+        }
+
+        if (heap[index] > heap[minSonIndex]) {
+            swipe(index, minSonIndex);
+            siftDown(minSonIndex);
+        }
     }
 
     private void siftUp(int index) {
@@ -41,8 +66,12 @@ public class MinHeap {
         heap[index] = temp;
     }
 
-    private boolean full() {
-        return capacity == elements;
+    public boolean isEmpty() {
+        return totalElements == 0;
+    }
+
+    public int size() {
+        return totalElements;
     }
 
     @Override

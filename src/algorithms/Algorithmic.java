@@ -2,25 +2,7 @@ package algorithms;
 
 import java.util.*;
 
-public class AlgorithmProblems {
-    public static void main(String[] args) {
-        int[] arr1 = {1, 2, 4, 5, 5, 5, 5, 4, 54, 23, 42, 43};
-        int[] arr2 = {};
-        int[] arr3 = {-1, -1, -1, 0 , -1};
-        int[] arr4 = {5};
-
-        hasFrequentElementOverK(null, 1);
-        hasFrequentElementOverK(arr1, 3);
-        hasFrequentElementOverK(arr2, 0);
-        hasFrequentElementOverK(arr3, 2);
-        System.out.print(System.lineSeparator());
-        hasPairWithSum(arr1, -1);
-        hasPairWithSum(arr4, 5);
-        System.out.print(System.lineSeparator());
-        countInversionsBrute(arr1);
-        countInversionsBrute(arr2);
-          countInversionsOptimal(arr3);
-    }
+public class Algorithmic {
 
     /**
      * Determines whether there exists an integer in the array that appears more than k times using hash structures.
@@ -128,7 +110,7 @@ public class AlgorithmProblems {
         }
 
         int totalInversions = sortAndCountInversions(array, 0, array.length - 1);
-        System.out.println(totalInversions);
+        System.out.println("Total inversions: " + totalInversions);
     }
 
     private static int mergeAndCount(int[] array, int left, int mid, int right) {
@@ -180,4 +162,6 @@ public class AlgorithmProblems {
             target[targetIndex++] = source[sourceIndex++];
         }
     }
+
+
 }

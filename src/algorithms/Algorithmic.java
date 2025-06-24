@@ -107,8 +107,8 @@ public class Algorithmic {
     }
 
     private static int mergeAndCount(int[] array, int left, int mid, int right) {
-        int leftPartLength = mid - left + 1;
-        int rightPartLength = right - mid;
+        int leftLength = mid - left + 1;
+        int rightLength = right - mid;
 
         int[] leftPart = Arrays.copyOfRange(array, left, mid + 1);
         int[] rightPart = Arrays.copyOfRange(array, mid + 1, right + 1);
@@ -116,7 +116,7 @@ public class Algorithmic {
         int indexLeft = 0, indexRight = 0, inversionCounter = 0;
         int mergeIndex = left;
 
-        while (indexLeft < leftPartLength && indexRight < rightPartLength) {
+        while (indexLeft < leftLength && indexRight < rightLength) {
 
             if (leftPart[indexLeft] <= rightPart[indexRight]) {
                 array[mergeIndex] = leftPart[indexLeft];
@@ -124,44 +124,60 @@ public class Algorithmic {
             } else {
                 array[mergeIndex] = rightPart[indexRight];
                 indexRight++;
-                inversionCounter += leftPartLength - indexLeft;
+                inversionCounter += leftLength - indexLeft;
             }
 
             mergeIndex++;
         }
 
-        copyIfRest(leftPart, array, indexLeft, mergeIndex);
-        copyIfRest(rightPart, array, indexRight, mergeIndex);
+        copyRest(leftPart, array, indexLeft, mergeIndex);
+        copyRest(rightPart, array, indexRight, mergeIndex);
 
         return inversionCounter;
     }
 
-    private static void copyIfRest(int[] source, int[] target, int sourceIndex, int targetIndex) {
+    private static void copyRest(int[] source, int[] target, int sourceIndex, int targetIndex) {
         while (sourceIndex < source.length) {
             target[targetIndex++] = source[sourceIndex++];
         }
     }
 
-    public static void findLIS(int[] array) {
+    /**
+     * Calculates the LIS length of the introduced list.
+     *
+     * @param list the list to be checked.
+     * @return the length of the LIS.
+     */
+    public static int LISLength(List<Integer> list) {
         List<Integer> sequence = new ArrayList<>();
 
-        sequence.add(array[0]);
+        for (Integer num : list) {
+            int index = locate(sequence, num);
 
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > sequence.getLast()) {
-                System.out.println(sequence);
-                sequence.add(array[i]);
+            if (index < 0) {
+                index = -(index + 1); // Decodes insertIndex: "not found, but it should be at ..."
+            }
+
+            if (index == sequence.size()) {
+                sequence.add(num);
             } else {
-                int low = indexBinarySearch(sequence, array[i]);
-                if (low < 0) {
-                    low = -(low + 1);
-                }
-                sequence.set(low, array[i]);
+                sequence.set(index, num);
             }
         }
+        // The sequence will always be in ascending order
+        // It will have the lowest values on each position.
+        return sequence.size();
     }
 
-    public static int indexBinarySearch(List<Integer> list, int element) {
+    /**
+     * Computes a traditional BinarySearch algorithm.
+     *
+     * @param list the list where the element is going to be searched.
+     * @param element the element to be searched.
+     * @return the list index where the element is located or should be located (in case not found)
+     *
+     */
+    public static int locate(List<Integer> list, int element) {
         int left = 0, right = list.size() - 1;
 
         while (left <= right) {
@@ -176,6 +192,8 @@ public class Algorithmic {
             }
         }
 
-        return -1 * left; // If not found returns the position where the value could be introduced
+        // Negative value means the element was not found
+        // The index is transposed by 1 to avoid ambiguity when the element is found at index 0
+        return -(left + 1);
     }
 }

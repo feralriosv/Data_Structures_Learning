@@ -15,9 +15,8 @@ public class MinHeap {
 
     public void insert(int element) {
         if (totalElements < capacity) {
-            int index = totalElements;
-            heap[index] = element;
-            siftUp(index);
+            heap[totalElements] = element;
+            siftUp(totalElements);
             totalElements++;
         }
     }
@@ -30,33 +29,41 @@ public class MinHeap {
 
     public int extractMin() {
         int result = heap[0];
-        heap[0] = heap[totalElements - 1];
+        heap[0] = 0;
         totalElements--;
         siftDown(0);
         return result;
     }
 
-    private void siftDown(int index) {
-        int minSonIndex;
-        int left = 2 * index + 1;
-        int right = 2 * index + 2;
+    private void siftDown(int fatherIndex) {
+        int lowestSonIndex;
+        int leftSon = 2 * fatherIndex + 1;
+        int rightSon = 2 * fatherIndex + 2;
 
-        if (heap[left] <= heap[right]) {
-            minSonIndex = left;
+        if (leftSon < totalElements && heap[leftSon] <= heap[rightSon]) {
+            lowestSonIndex = leftSon;
+        } else if (rightSon < totalElements && heap[leftSon] > heap[rightSon]){
+            lowestSonIndex = rightSon;
         } else {
-            minSonIndex = right;
+            lowestSonIndex = totalElements;
         }
 
-        if (heap[index] > heap[minSonIndex]) {
-            swipe(index, minSonIndex);
-            siftDown(minSonIndex);
+        if (heap[fatherIndex] < heap[lowestSonIndex]) {
+            swipe(fatherIndex, lowestSonIndex);
+            siftDown(lowestSonIndex);
         }
     }
 
     private void siftUp(int index) {
-        if (index > 0 && heap[index / 2] > heap[index]) {
-            swipe(index, index / 2);
-            siftUp(index / 2);
+        while (index > 0) {
+            int parentIndex = (index - 1) / 2;
+
+            if (heap[parentIndex] > heap[index]) {
+                swipe(parentIndex, index);
+                index = parentIndex;
+            } else {
+                break;
+            }
         }
     }
 
